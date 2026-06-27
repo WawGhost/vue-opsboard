@@ -1,10 +1,23 @@
+<script setup lang="ts">
+import AppShell from "@/shared/ui/AppShell.vue";
+import BaseCard from "@/shared/ui/BaseCard.vue";
+import AppHeader from "@/widgets/app-header/ui/AppHeader.vue";
+import SidebarShell from "@/widgets/sidebar/ui/SidebarShell.vue";
+import KpiPanel from "@/widgets/kpi-panel/ui/KpiPanel.vue";
+import MapPanel from "@/widgets/map-panel/ui/MapPanel.vue";
+import TimelinePanel from "@/widgets/timeline-panel/ui/TimelinePanel.vue";
+import { useDashboardData } from "../model/use-dashboard-data";
+
+const { dashboard, isLoading, error } = useDashboardData();
+</script>
+
 <template>
   <AppShell>
     <div class="dashboard-page">
       <AppHeader />
 
       <main class="dashboard-page__content">
-        <KpiPanel />
+        <KpiPanel v-if="dashboard" :kpi="dashboard.kpi" />
 
         <div class="dashboard-page__main-grid">
           <SidebarShell>
@@ -19,7 +32,11 @@
             </BaseCard>
           </SidebarShell>
 
-          <MapPanel />
+          <MapPanel
+            v-if="dashboard"
+            :vehicles="dashboard.vehicles"
+            :zones="dashboard.zones"
+          />
         </div>
 
         <TimelinePanel />
@@ -27,16 +44,6 @@
     </div>
   </AppShell>
 </template>
-
-<script setup lang="ts">
-import AppShell from "@/shared/ui/AppShell.vue";
-import BaseCard from "@/shared/ui/BaseCard.vue";
-import AppHeader from "@/widgets/app-header/ui/AppHeader.vue";
-import SidebarShell from "@/widgets/sidebar/ui/SidebarShell.vue";
-import KpiPanel from "@/widgets/kpi-panel/ui/KpiPanel.vue";
-import MapPanel from "@/widgets/map-panel/ui/MapPanel.vue";
-import TimelinePanel from "@/widgets/timeline-panel/ui/TimelinePanel.vue";
-</script>
 
 <style scoped>
 .dashboard-page {

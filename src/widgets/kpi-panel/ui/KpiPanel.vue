@@ -1,3 +1,33 @@
+<script setup lang="ts">
+import type { DashboardKpi } from "@/pages/dashboard/model/types";
+import { computed } from "vue";
+
+interface Props {
+  kpi: DashboardKpi;
+}
+
+const props = defineProps<Props>();
+
+const items = computed(() => [
+  {
+    label: "Active Vehicles",
+    value: props.kpi.activeVehicles,
+  },
+  {
+    label: "Idle Vehicles",
+    value: props.kpi.idleVehicles,
+  },
+  {
+    label: "Delayed Vehicles",
+    value: props.kpi.delayedVehicles,
+  },
+  {
+    label: "Active Incidents",
+    value: props.kpi.activeIncidents,
+  },
+]);
+</script>
+
 <template>
   <div class="kpi-grid">
     <div class="kpi-card" v-for="item in items" :key="item.label">
@@ -6,15 +36,6 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-const items = [
-  { label: "Active Vehicles", value: 24 },
-  { label: "Delayed Deliveries", value: 8 },
-  { label: "Avg ETA", value: "31 min" },
-  { label: "Active Incidents", value: 3 },
-];
-</script>
 
 <style scoped>
 .kpi-grid {
