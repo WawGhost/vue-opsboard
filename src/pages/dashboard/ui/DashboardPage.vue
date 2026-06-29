@@ -46,21 +46,29 @@ const { dashboard, isLoading, error } = useDashboardData();
 
 <style scoped>
 .dashboard-page {
-  min-height: 100vh;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
   background: #0f131a;
   color: #f3f6fb;
+  overflow: hidden;
 }
 
 .dashboard-page__content {
+  flex: 1;
   display: flex;
   flex-direction: column;
   gap: 16px;
   padding: 16px;
+  overflow: hidden;
+  min-height: 0;
 }
 
 .dashboard-page__main-grid {
+  flex: 1;
   display: grid;
   grid-template-columns: 340px minmax(0, 1fr);
   gap: 16px;
+  min-height: 0;
 }
 </style>

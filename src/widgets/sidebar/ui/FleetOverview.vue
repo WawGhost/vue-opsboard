@@ -22,11 +22,19 @@ defineProps<{ vehicles: Vehicle[] }>();
 </template>
 
 <style scoped>
+.fleet-overview {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  flex: 1;
+}
+
 .fleet-overview__header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 12px;
+  flex-shrink: 0;
 }
 
 .fleet-overview__title {
@@ -46,5 +54,8 @@ defineProps<{ vehicles: Vehicle[] }>();
   display: flex;
   flex-direction: column;
   gap: 8px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.12) transparent;
 }
 </style>
