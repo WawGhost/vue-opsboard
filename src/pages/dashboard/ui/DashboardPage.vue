@@ -34,6 +34,7 @@ const { dashboard, isLoading, error } = useDashboardData();
             v-if="dashboard"
             :vehicles="dashboard.vehicles"
             :zones="dashboard.zones"
+            :incidents="dashboard.incidents"
           />
         </div>
 

@@ -1,6 +1,11 @@
 export type VehicleType = "bike" | "van" | "truck";
 export type VehicleStatus = "idle" | "delivering" | "delayed" | "broken";
 
+export type Point = {
+  x: number;
+  y: number;
+};
+
 export type Vehicle = {
   id: string;
   name: string;
@@ -11,8 +16,6 @@ export type Vehicle = {
   speed: number;
   zoneId: string;
   currentTaskId: string | null;
-  position: {
-    x: number;
-    y: number;
-  };
+  position: Point;
+  waypoints?: Point[];
 };
