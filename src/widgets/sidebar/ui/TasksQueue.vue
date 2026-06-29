@@ -46,11 +46,19 @@ function findVehicle(vehicleId: string | null): Vehicle | null {
 </template>
 
 <style scoped>
+.tasks-queue {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  flex: 1;
+}
+
 .tasks-queue__header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 12px;
+  flex-shrink: 0;
 }
 
 .tasks-queue__title {
@@ -70,5 +78,8 @@ function findVehicle(vehicleId: string | null): Vehicle | null {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.12) transparent;
 }
 </style>
