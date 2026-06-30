@@ -1,8 +1,17 @@
 <script setup lang="ts">
 import type { Vehicle } from "@/entities/vehicle/model/types";
 import VehicleCard from "@/entities/vehicle/ui/VehicleCard.vue";
+import { computed } from "vue";
 
-defineProps<{ vehicles: Vehicle[] }>();
+const props = defineProps<{ vehicles: Vehicle[] }>();
+
+function loadRatio(vehicle: Vehicle): number {
+  return vehicle.capacity > 0 ? vehicle.load / vehicle.capacity : 0;
+}
+
+const sortedVehicles = computed(() =>
+  [...props.vehicles].sort((a, b) => loadRatio(b) - loadRatio(a)),
+);
 </script>
 
 <template>
@@ -13,7 +22,7 @@ defineProps<{ vehicles: Vehicle[] }>();
     </div>
     <div class="fleet-overview__list">
       <VehicleCard
-        v-for="vehicle in vehicles"
+        v-for="vehicle in sortedVehicles"
         :key="vehicle.id"
         :vehicle="vehicle"
       />
