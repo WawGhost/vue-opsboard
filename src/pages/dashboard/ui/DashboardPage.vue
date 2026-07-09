@@ -7,6 +7,7 @@ import MapPanel from "@/widgets/map-panel/ui/MapPanel.vue";
 import TimelinePanel from "@/widgets/timeline-panel/ui/TimelinePanel.vue";
 import FleetOverview from "@/widgets/sidebar/ui/FleetOverview.vue";
 import TasksQueue from "@/widgets/sidebar/ui/TasksQueue.vue";
+import IncidentPanel from "@/widgets/incident-panel/ui/IncidentPanel.vue";
 import { useDashboardData } from "../model/use-dashboard-data";
 
 const { dashboard, isLoading, error } = useDashboardData();
@@ -18,27 +19,42 @@ const { dashboard, isLoading, error } = useDashboardData();
       <AppHeader />
 
       <main class="dashboard-page__content">
-        <KpiPanel v-if="dashboard" :kpi="dashboard.kpi" />
-
-        <div class="dashboard-page__main-grid">
-          <SidebarShell>
-            <FleetOverview v-if="dashboard" :vehicles="dashboard.vehicles" />
-            <TasksQueue
-              v-if="dashboard"
-              :tasks="dashboard.tasks"
-              :vehicles="dashboard.vehicles"
-            />
-          </SidebarShell>
-
-          <MapPanel
-            v-if="dashboard"
-            :vehicles="dashboard.vehicles"
-            :zones="dashboard.zones"
-            :incidents="dashboard.incidents"
-          />
+        <div v-if="isLoading" class="dashboard-page__state">
+          Loading scenario...
         </div>
 
-        <TimelinePanel />
+        <div v-else-if="error" class="dashboard-page__state">
+          Failed to load scenario
+        </div>
+
+        <template v-else-if="dashboard">
+          <KpiPanel :kpi="dashboard.kpi" />
+
+          <div class="dashboard-page__main-grid">
+            <SidebarShell>
+              <FleetOverview :vehicles="dashboard.vehicles" />
+              <TasksQueue
+                :tasks="dashboard.tasks"
+                :vehicles="dashboard.vehicles"
+              />
+            </SidebarShell>
+
+            <MapPanel
+              :vehicles="dashboard.vehicles"
+              :zones="dashboard.zones"
+              :incidents="dashboard.incidents"
+            />
+
+            <IncidentPanel
+              :incidents="dashboard.incidents"
+              :zones="dashboard.zones"
+            />
+          </div>
+
+          <TimelinePanel />
+        </template>
+
+        <div v-else class="dashboard-page__state">No scenario data</div>
       </main>
     </div>
   </AppShell>
@@ -67,8 +83,15 @@ const { dashboard, isLoading, error } = useDashboardData();
 .dashboard-page__main-grid {
   flex: 1;
   display: grid;
-  grid-template-columns: 340px minmax(0, 1fr);
+  grid-template-columns: 340px minmax(0, 1fr) 320px;
   gap: 16px;
   min-height: 0;
+}
+
+.dashboard-page__state {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  color: var(--muted);
 }
 </style>
